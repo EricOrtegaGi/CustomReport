@@ -13,31 +13,18 @@ class ModuleReport(models.Model):
     
     
     def _select(self):
-        return """
-            SELECT SUM(epo.price) AS total_price, rp.name as comercial, ep.state, ep.id               
-        """
-    
+        return "SELECT SUM(epo.price) AS total_price, rp.name as comercial, ep.state, ep.id"
+
     def _group_by(self):
-        return """
-            GROUP BY rp.name, ep.state
-        """
-        
+        return "GROUP BY rp.name, ep.state, ep.id"
+
     def _from(self):
-        return """
-            FROM estate_property ep
-                LEFT JOIN res_users ru ON ep.salesperson_id = ru.id
-                LEFT JOIN res_partner rp ON ru.partner_id = rp.id
-                LEFT JOIN estate_property_offer epo ON ep.id = epo.property_id
-        """
+        return "FROM estate_property ep LEFT JOIN res_users ru ON ep.salesperson_id = ru.id LEFT JOIN res_partner rp ON ru.partner_id = rp.id LEFT JOIN estate_property_offer epo ON ep.id = epo.property_id"
 
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
         self.env.cr.execute("""CREATE or REPLACE VIEW %s as (
-            SELECT
-                %s
-            FROM
-                %s
-            GROUP BY 
-                %s
-        )""" % (self._table, self._select(), self._from(), self._group_by())
-    
+            %s
+            %s
+            %s
+        )""" % (self._table, self._select(), self._from(), self._group_by()))

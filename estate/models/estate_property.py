@@ -25,6 +25,14 @@ class EstateProperty(models.Model):
     parking = fields.Boolean('Parking')
     @api.depends('expected_selling_price','area')
     
+    
+    @api.model
+    def _valid_field_parameter(self, field, parameter):
+        res = super()._valid_field_parameter(field, parameter)
+        if not res and parameter == 'stored':
+            return True
+        return res
+    
     def _calcularPreuPerMetre(self):
         for record in self:
             if record.area > 0 :
