@@ -1,4 +1,7 @@
 <odoo>
+    <!-- ... altres registres ... -->
+
+    <!-- Modificar la vista de la comanda per a mostrar els nous camps -->
     <record id="view_order_form" model="ir.ui.view">
         <field name="name">sale.order.form</field>
         <field name="model">sale.order</field>
@@ -10,4 +13,13 @@
             </field>
         </field>
     </record>
+
+    <!-- Afegir una nova opció de menú per a mostrar la vista SQL -->
+    <record id="action_sales_module_report" model="ir.actions.act_window">
+        <field name="name">Sales Module Report</field>
+        <field name="res_model">sales.module.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sales_module_report" name="Sales Module Report" action="action_sales_module_report"/>
 </odoo>

@@ -1,12 +1,47 @@
-<t t-if="o.num_articles">
-    <div>
-        <strong>Número de artículos:</strong>
-        <span t-field="o.num_articles"/>
-    </div>
-</t>
-<t t-if="o.preferred_email">
-    <div>
-        <strong>Email preferido:</strong>
-        <span t-field="o.preferred_email"/>
-    </div>
-</t>
+<odoo>
+    <data>
+        <!-- ... tus otras vistas ... -->
+
+        <record id="action_print_sales_module_report" model="ir.actions.server">
+            <field name="name">Print Sales Module Report</field>
+            <field name="model_id" ref="model_sales_module_report"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.browse(env.context.get('active_ids')).print_report()
+            </field>
+        </record>
+
+        <record id="view_sales_module_report_form" model="ir.ui.view">
+            <field name="name">sales.module.report.form</field>
+            <field name="model">sales.module.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="%(action_print_sales_module_report)d" string="Print Report" type="action"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="num_articles"/>
+                            <field name="preferred_email"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <template id="report_template">
+            <t t-if="o.num_articles">
+                <div>
+                    <strong>Número de artículos:</strong>
+                    <span t-esc="o.num_articles"/>
+                </div>
+            </t>
+            <t t-if="o.preferred_email">
+                <div>
+                    <strong>Email preferido:</strong>
+                    <span t-esc="o.preferred_email"/>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
