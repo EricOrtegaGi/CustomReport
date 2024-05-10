@@ -7,6 +7,8 @@
     'depends': ['sale'],
     'data': [
         'views/sale_order_view.xml',
+        'views/custom_sale_order_view.xml',
+        'views/report_saleorder_document.xml',
     ],
     'installable': True,
 }

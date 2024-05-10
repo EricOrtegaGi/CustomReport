@@ -1,0 +1,24 @@
+<odoo>
+    <record id="custom_sale_order_view_tree" model="ir.ui.view">
+        <field name="name">custom.sale.order.view.tree</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <tree string="Custom Sale Order View">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="date_order"/>
+                <field name="num_articles"/>
+                <field name="preferred_email"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_custom_sale_order_view" model="ir.actions.act_window">
+        <field name="name">Custom Sale Order View</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="custom_sale_order_view_tree"/>
+    </record>
+
+    <menuitem id="menu_custom_sale_order_view" name="Custom Sale Order View" parent="sale.menu_sale_order" action="action_custom_sale_order_view"/>
+</odoo>
