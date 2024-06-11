@@ -11,4 +11,5 @@ class SaleOrder(models.Model):
     @api.depends('order_line')
     def _compute_total_items(self):
         for order in self:
-            order.total_items = sum(line.product_uom_qty for line in order.order_line)
+            unique_products = set(line.product_id.id for line in order.order_line)
+            order.total_items = len(unique_products)
